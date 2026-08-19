@@ -10,6 +10,9 @@
     <body>
         <header class="header">
             <h1>Facebook</h1>
+            <a class="logo" href="#" class="header__logo-link" aria-label="Facebook">
+                    <img src="D:\Picture\Bla Bla\facebook-logo.svg" alt="Facebook Logo" class="header__logo-img">
+            </a>
         </header>
         <main class="container">
             <div class="content">
@@ -22,19 +25,19 @@
                     <h2>Log in to Facebook</h2>
                     <form action="#" method="post">
                 <div class="form__group">
-                    <label for="email">Email or phone number</label>
+                    <label for="email"></label>
                     <input type="text" id="email" name="email" placeholder="Email or phone number" required/>
                 </div>
                 <div class="form__group">
-                    <label for="password">Password</label>
+                    <label for="password"></label>
                     <input type="password" id="password" name="password" placeholder="Password" required/>
                 </div>
-                <div class="form__group">
-                    <button type="submit">Log In</button>
+                <div class="form__group--button">
+                    <button class="login" type="submit">Log In</button>
                 </div>
             </form>
-            <div class="form__group">
-                <a href="#">Forgotten password?</a>
+            <div class="form__group--forgot-password">
+                <button class="forgot-password" type="submit">Forgotten Password?</button>
             </div>
         </section>
 
