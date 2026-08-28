@@ -1,0 +1,64 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background-image: url('nguyen-tac-trong-thiet-ke-do-hoa.jpg'), url('truong_day_thiet_ke_do_hoa.jpg');
+    background-position: top, 15vh, 50vh;
+    background-repeat: repeat-x, no-repeat;
+    background-color: #FFFFFF;
+}
+
+.container {
+    width: 100%;
+    max-width: 650px; 
+    margin: 0 auto;
+    padding-top: 150px; 
+    padding-bottom: 250px; 
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+h1 {
+    color: #00FF00;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 4px solid #00FF00;
+    background-color: #FFFFFF; 
+}
+
+th, td {
+    border: 1px solid #00FF00;
+    padding: 8px 12px;
+    text-align: center;
+    color: #333;
+}
+
+th {
+    background-color: #00FF00;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+td.col-name {
+    text-align: left;
+    background-color: #99FFFF;
+}
+
+tr.row-last td {
+    background-color: #FF9900;
+}
+
+tr.row-last td.col-name {
+    background-color: #FF9900;
+}
