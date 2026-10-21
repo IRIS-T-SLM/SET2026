@@ -5,7 +5,6 @@ const handleProductRoutes = async (req, res, parsedUrl) => {
     const method = req.method;
     const pathParts = pathname.split('/');
 
-    // Routes cho /products
     if (pathname === '/products' || pathname === '/products/') {
         if (method === 'GET') {
             return await productController.getProducts(req, res, parsedUrl);
@@ -15,9 +14,8 @@ const handleProductRoutes = async (req, res, parsedUrl) => {
         }
     }
 
-    // Routes cho /products/:id
     if (pathParts.length === 3 && pathParts[1] === 'products') {
-        const id = Number(pathParts[2]); // Ép kiểu chuỗi sang số
+        const id = Number(pathParts[2]);
 
         if (method === 'GET') {
             return await productController.getProductById(req, res, id);
@@ -33,7 +31,6 @@ const handleProductRoutes = async (req, res, parsedUrl) => {
         }
     }
 
-    // Trả về false nếu route không khớp
     return false;
 };
 

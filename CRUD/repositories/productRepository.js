@@ -1,42 +1,78 @@
-let products = [];
-let autoId = 1;
+const fs = require('fs');
+const path = require('path');
+
+const filePath = path.join(__dirname, '../../data/products.json');
 
 const productRepository = {
-    findAll: () => {
-        return products;
+    load: () => {
+        try {
+            if (!fs.existsSync(filePath)) {
+                fs.writeFileSync(filePath, JSON.stringify([]));
+                return [];
+            }
+            const data = fs.readFileSync(filePath, 'utf8');
+            return JSON.parse(data || '[]');
+        } catch (error) {
+            console.error('Lỗi khi đọc file JSON:', error);
+            return [];
+        }
     },
 
-    findById: (id) => {
+    save: (products) => {
+        try {
+            fs.writeFileSync(filePath, JSON.stringify(products, null, 2), 'utf8');
+        } catch (error) {
+            console.error('Lỗi khi ghi file JSON:', error);
+        }
+    },
+
+    findAll: function () {
+        return this.load();
+    },
+
+    findById: function (id) {
+        const products = this.load();
         return products.find(p => p.id === id);
     },
 
-    findIndexById: (id) => {
+    findIndexById: function (id) {
+        const products = this.load();
         return products.findIndex(p => p.id === id);
     },
 
-    create: (data) => {
+    create: function (data) {
+        const products = this.load();
+        
+        // Tính toán autoId dựa trên ID lớn nhất hiện tại
+        const maxId = products.reduce((max, p) => (p.id > max ? p.id : max), 0);
         const newProduct = {
             ...data,
-            id: autoId++ // Bẫy ID: Tự động tăng và không gán lại ID đã xóa
+            id: maxId + 1
         };
+
         products.push(newProduct);
+        this.save(products);
         return newProduct;
     },
 
-    updatePut: (index, id, data) => {
-        // Bẫy PUT: Mất hết các trường cũ, chỉ giữ dữ liệu mới và ID cứng
+    updatePut: function (index, id, data) {
+        const products = this.load();
         products[index] = { ...data, id: id };
+        this.save(products);
         return products[index];
     },
 
-    updatePatch: (index, id, data) => {
-        // Bẫy PATCH: Trộn dữ liệu cũ và mới, ghim cứng ID
+    updatePatch: function (index, id, data) {
+        const products = this.load();
         products[index] = { ...products[index], ...data, id: id };
+        this.save(products);
         return products[index];
     },
 
-    deleteByIndex: (index) => {
+    deleteByIndex: function (index) {
+        const products = this.load();
         products.splice(index, 1);
+        this.save(products);
     }
 };
 

@@ -3,8 +3,15 @@ const productRepository = require('../repositories/productRepository');
 const productService = {
     getAllProducts: (limitParam) => {
         let result = productRepository.findAll();
+
         if (limitParam !== null && limitParam !== undefined) {
             const limit = Number(limitParam);
+            
+            // Validate query param: limit phải là số nguyên dương >= 0
+            if (isNaN(limit) || !Number.isInteger(limit) || limit < 0) {
+                throw { status: 400, message: 'Bad Request: Limit must be a non-negative integer' };
+            }
+            
             result = result.slice(0, limit);
         }
         return result;
