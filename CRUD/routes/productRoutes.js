@@ -7,10 +7,12 @@ const handleProductRoutes = async (req, res, parsedUrl) => {
 
     if (pathname === '/products' || pathname === '/products/') {
         if (method === 'GET') {
-            return await productController.getProducts(req, res, parsedUrl);
+            await productController.getProducts(req, res, parsedUrl);
+            return true; // Báo cho server biết route đã được xử lý xong
         }
         if (method === 'POST') {
-            return await productController.createProduct(req, res);
+            await productController.createProduct(req, res);
+            return true;
         }
     }
 
@@ -18,20 +20,24 @@ const handleProductRoutes = async (req, res, parsedUrl) => {
         const id = Number(pathParts[2]);
 
         if (method === 'GET') {
-            return await productController.getProductById(req, res, id);
+            await productController.getProductById(req, res, id);
+            return true;
         }
         if (method === 'PUT') {
-            return await productController.updateProductPut(req, res, id);
+            await productController.updateProductPut(req, res, id);
+            return true;
         }
         if (method === 'PATCH') {
-            return await productController.updateProductPatch(req, res, id);
+            await productController.updateProductPatch(req, res, id);
+            return true;
         }
         if (method === 'DELETE') {
-            return await productController.deleteProduct(req, res, id);
+            await productController.deleteProduct(req, res, id);
+            return true;
         }
     }
 
-    return false;
+    return false; // Route không khớp
 };
 
 module.exports = handleProductRoutes;

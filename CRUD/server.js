@@ -1,8 +1,9 @@
 const http = require('http');
-const handleProductRoutes = require('./src/routes/productRoutes');
-const runMiddlewares = require('./src/utils/pipeline');
-const bodyParserMiddleware = require('./src/middlewares/bodyParserMiddleware');
-const authMiddleware = require('./src/middlewares/authMiddleware');
+// Sửa lại đường dẫn bỏ chữ 'src/' và đúng chữ hoa 'Middlewares'
+const handleProductRoutes = require('./routes/productRoutes');
+const runMiddlewares = require('./utils/pipeline');
+const bodyParserMiddleware = require('./Middlewares/bodyParserMiddleware');
+const authMiddleware = require('./Middlewares/authMiddleware');
 
 const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -22,13 +23,11 @@ const server = http.createServer(async (req, res) => {
             res.end(JSON.stringify({ message: 'Route not found' }));
         }
     } catch (error) {
-        // Bắt các lỗi validation / auth / business logic có status code cụ thể
         if (error.status) {
             res.writeHead(error.status);
             return res.end(JSON.stringify({ message: error.message }));
         }
 
-        // Catch default server internal errors
         res.writeHead(500);
         res.end(JSON.stringify({ message: 'Internal Server Error' }));
     }

@@ -1,12 +1,18 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, '../../data/products.json');
+// Sửa lại từ '../../data/products.json' thành '../data/products.json' cho đúng cấu trúc thực tế
+const filePath = path.join(__dirname, '../data/products.json');
 
 const productRepository = {
     load: () => {
         try {
             if (!fs.existsSync(filePath)) {
+                // Đảm bảo thư mục data tồn tại nếu chưa có
+                const dir = path.dirname(filePath);
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir, { recursive: true });
+                }
                 fs.writeFileSync(filePath, JSON.stringify([]));
                 return [];
             }
@@ -42,8 +48,6 @@ const productRepository = {
 
     create: function (data) {
         const products = this.load();
-        
-        // Tính toán autoId dựa trên ID lớn nhất hiện tại
         const maxId = products.reduce((max, p) => (p.id > max ? p.id : max), 0);
         const newProduct = {
             ...data,
